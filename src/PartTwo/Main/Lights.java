@@ -1,13 +1,13 @@
-package Main;
+package PartTwo.Main;
 
 import com.jogamp.opengl.GL2;
 
 /**
  * Created by Scott on 29/04/2017.
  */
-public class Lights
+class Lights
 {
-	public static void renderLighting(GL2 gl)
+	static void renderLighting(GL2 gl)
 	{
 		float ambient[] = { 0, 0, 0, 1 };
 		float diffuse[] = { 1, 1, 1, 1 };
