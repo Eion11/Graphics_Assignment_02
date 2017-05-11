@@ -40,7 +40,7 @@ public class Grid
 	{
 		if (transparency > 0) // enable or disable features if the grid is transparent
 		{
-			gl.glDisable(GL2.GL_DEPTH_TEST);
+			gl.glDisable(GL2.GL_DEPTH_BUFFER_BIT);
 			gl.glEnable(GL2.GL_BLEND);
 		}
 

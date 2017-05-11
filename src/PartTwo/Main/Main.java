@@ -25,7 +25,7 @@ public class Main
 		GLCanvas canvas = new GLCanvas();
 
 		Camera camera = new Camera();
-		Grid water = new Grid(5, 8, 0.5, 0.8, 1, 0.2);
+		Grid water = new Grid(5, 8, 0.5, 0.8, 1, 0.5);
 		Grid floor = new Grid(5, -2, 0.8, 0.5, 0.25, 0);
 		Submarine submarine = new Submarine(water, floor);
 

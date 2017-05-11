@@ -56,7 +56,7 @@ public class Renderer implements GLEventListener
 		Origin.drawCoordinateAxes(gl);
 
 		// Draw Submarine
-		gl.glColor3d(0.27, 0.5, 0.7);
+		gl.glColor3d(0.5, 0.8, 0.05);
 		submarine.draw(gl);
 		floor.draw(gl);
 		water.draw(gl);
