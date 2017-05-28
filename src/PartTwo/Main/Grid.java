@@ -9,7 +9,7 @@ public class Grid
 {
 	public int gridYLevel; // what y level the grid will be drawn
 
-	private int tileSize = 5;
+	private double tileSize = 0.5;
 	private int    gridMax; // How many tiles you want to emerge in each direction from the origin
 	private double red;
 	private double green;
@@ -36,7 +36,7 @@ public class Grid
 		drawTileGrid(gl);
 	}
 
-	private void drawTile(GL2 gl, int startX, int startY)
+	private void drawTile(GL2 gl, double startX, double startY)
 	{
 		if (transparency > 0) // enable or disable features if the grid is transparent
 		{
@@ -47,28 +47,30 @@ public class Grid
 		gl.glBegin(drawingStyle);
 
 		gl.glColor4d(red, green, blue, transparency);
-		gl.glNormal3d(0, 1, 0);
 
+		gl.glNormal3d(0, 1, 0);
 		gl.glVertex3d(startX, gridYLevel, startY);
+		gl.glNormal3d(0, 1, 0);
 		gl.glVertex3d(startX + tileSize, gridYLevel, startY);
+		gl.glNormal3d(0, 1, 0);
 		gl.glVertex3d(startX + tileSize, gridYLevel, startY + tileSize);
+		gl.glNormal3d(0, 1, 0);
 		gl.glVertex3d(startX, gridYLevel, startY + tileSize);
 
-		gl.glNormal3d(0, 1, 0);
 		gl.glEnd();
 
 		if (transparency > 0) // enable or disable features if the grid is transparent
 		{
 			gl.glDisable(GL2.GL_BLEND);
-			gl.glEnable(GL2.GL_DEPTH_TEST);
+			gl.glEnable(GL2.GL_DEPTH_BUFFER_BIT);
 		}
 	}
 
 	private void drawTileGrid(GL2 gl)
 	{
-		for (int i = -gridMax * tileSize; i < gridMax * tileSize; i += tileSize)
+		for (double i = -gridMax * tileSize; i < gridMax * tileSize; i += tileSize)
 		{
-			for (int j = -gridMax * tileSize; j < gridMax * tileSize; j += tileSize)
+			for (double j = -gridMax * tileSize; j < gridMax * tileSize; j += tileSize)
 			{
 				drawTile(gl, i, j);
 			}

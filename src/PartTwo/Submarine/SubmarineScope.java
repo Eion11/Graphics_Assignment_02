@@ -1,24 +1,20 @@
 package PartTwo.Submarine;
 
-import PartTwo.Main.Point;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.glu.GLUquadric;
 
 /**
- * Created by Scott on 3/05/2017.
+ * Created by Scott Richards on 21-May-17.
  */
-public class SubmarinePropeller extends SubmarinePart
+public class SubmarineScope extends SubmarinePart
 {
 	private GLU        glu;
 	private GLUquadric quadric;
 
-	private int initialRotation;
-
-	SubmarinePropeller(RotationAxis axis, int initialRotation)
+	SubmarineScope(RotationAxis axis)
 	{
 		this.axis = axis;
-		this.initialRotation = initialRotation;
 
 		glu = new GLU();
 	}
@@ -32,9 +28,8 @@ public class SubmarinePropeller extends SubmarinePart
 		glu.gluQuadricDrawStyle(quadric, drawingStyle);
 
 		gl.glRotated(90, 1, 0, 0);
-		gl.glRotated(initialRotation, 0, 1, 0);
-		gl.glScaled(0.5, 0.1, 1);
-		glu.gluCylinder(quadric, 0, 1, 1, 100, 100);
+		gl.glScaled(0.2, 0.2, 0.5);
+		glu.gluCylinder(quadric, 1, 1, 1, 100, 100);
 
 		gl.glPopMatrix();
 	}
@@ -67,4 +62,3 @@ public class SubmarinePropeller extends SubmarinePart
 		this.rotation = rotation;
 	}
 }
-

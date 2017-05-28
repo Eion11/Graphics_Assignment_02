@@ -17,6 +17,8 @@ public class Submarine
 	public SubmarinePropeller propeller2;
 	public SubmarinePropeller propeller3;
 	public SubmarinePropeller propeller4;
+	public SubmarineScope scope;
+	public SubmarineSpotlight spotLight;
 
 	public Submarine(Grid water, Grid floor)
 	{
@@ -27,7 +29,7 @@ public class Submarine
 
 	private void createSubmarine()
 	{
-		// Creates each peice of the submarine and puts them in the right position
+		// Creates each piece of the submarine and puts them in the right position
 		propeller1 = new SubmarinePropeller(RotationAxis.Z, 0);
 		propeller1.setTranslation(0, 0, 1.5);
 
@@ -40,11 +42,18 @@ public class Submarine
 		propeller4 = new SubmarinePropeller(RotationAxis.Z, 270);
 		propeller4.setTranslation(0, 0, 1.5);
 
+		scope = new SubmarineScope(RotationAxis.Z);
+		scope.setTranslation(0, 1.5, 0);
+
+		spotLight = new SubmarineSpotlight();
+
 		body = new SubmarineBody(RotationAxis.Y);
 		body.addChild(propeller1);
 		body.addChild(propeller2);
 		body.addChild(propeller3);
 		body.addChild(propeller4);
+		body.addChild(scope);
+		body.addChild(spotLight);
 	}
 
 	public void draw(GL2 gl)

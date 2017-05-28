@@ -41,6 +41,7 @@ public class Renderer implements GLEventListener
 		gl.glShadeModel(GL2.GL_SMOOTH);
 		gl.glEnable(GL2.GL_DEPTH_TEST);
 		gl.glBlendFunc(GL2.GL_SRC_ALPHA, GL2.GL_ONE_MINUS_SRC_ALPHA);
+		gl.glEnable(GL2.GL_LIGHTING);
 
 		glu = new GLU();
 	}
@@ -52,7 +53,7 @@ public class Renderer implements GLEventListener
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
 
 		camera.draw(gl, submarine);
-		Lights.renderLighting(gl);
+		GlobalLighting.renderLighting(gl);
 		Origin.drawCoordinateAxes(gl);
 
 		// Draw Submarine

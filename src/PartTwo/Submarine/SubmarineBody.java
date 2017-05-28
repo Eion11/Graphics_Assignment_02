@@ -1,6 +1,5 @@
 package PartTwo.Submarine;
 
-import PartTwo.Main.Point;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.glu.GLUquadric;
@@ -12,6 +11,10 @@ public class SubmarineBody extends SubmarinePart
 {
 	private GLU        glu;
 	private GLUquadric quadric;
+
+	protected double rotationSecondaryX;
+	protected double rotationSecondaryY;
+	protected double rotationSecondaryZ;
 
 	SubmarineBody(RotationAxis axis)
 	{
@@ -27,7 +30,7 @@ public class SubmarineBody extends SubmarinePart
 
 		glu.gluQuadricDrawStyle(quadric, drawingStyle);
 		gl.glScaled(1, 1, 1.5);
-		glu.gluSphere(quadric, 1, 20, 20);
+		glu.gluSphere(quadric, 1, 100, 100);
 
 		gl.glPopMatrix();
 	}
@@ -50,6 +53,18 @@ public class SubmarineBody extends SubmarinePart
 		}
 	}
 
+	@Override public void rotateSecondary(GL2 gl)
+	{
+		// X axis
+		gl.glRotated(rotationSecondaryX, 1, 0, 0);
+
+		// Y axis
+		gl.glRotated(rotationSecondaryY, 0, 1, 0);
+
+		// Z axis
+		gl.glRotated(rotationSecondaryZ, 0, 0, 1);
+	}
+
 	public void adjustRotation(double adjustment)
 	{
 		rotation += adjustment;
@@ -58,5 +73,47 @@ public class SubmarineBody extends SubmarinePart
 		{
 			rotation = 0;
 		}
+	}
+
+	public void adjustRotationSecondary(double adjustment, RotationAxis axisSecondary)
+	{
+		switch (axisSecondary)
+		{
+			case X:
+				if (rotationSecondaryX + adjustment <= 20 && rotationSecondaryX + adjustment >= -20)
+				{
+					rotationSecondaryX += adjustment;
+				}
+
+				if (rotationSecondaryX < 1 && rotationSecondaryX > -1)
+				{
+					rotationSecondaryX = 0;
+				}
+				break;
+			case Y:
+				if (rotationSecondaryY + adjustment <= 15 && rotationSecondaryY + adjustment >= -15)
+				{
+					rotationSecondaryY += adjustment;
+				}
+
+				if (rotationSecondaryY < 1 && rotationSecondaryY > -1)
+				{
+					rotationSecondaryY = 0;
+				}
+				break;
+
+			case Z:
+				if (rotationSecondaryZ + adjustment <= 20 && rotationSecondaryZ + adjustment >= -20)
+				{
+					rotationSecondaryZ += adjustment;
+				}
+
+				if (rotationSecondaryZ < 1 && rotationSecondaryZ > -1)
+				{
+					rotationSecondaryZ = 0;
+				}
+				break;
+		}
+
 	}
 }

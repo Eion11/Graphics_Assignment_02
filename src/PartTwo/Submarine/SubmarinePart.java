@@ -11,12 +11,12 @@ public abstract class SubmarinePart
 {
 	protected int drawingStyle;
 	protected Point position = new Point();
-	protected double rotation;
 	protected RotationAxis axis;
+	protected double       rotation;
 
 	private List<SubmarinePart> children = new LinkedList<>();
 
-	SubmarinePart()
+	protected SubmarinePart()
 	{
 		drawingStyle = GLU.GLU_FILL;
 	}
@@ -31,6 +31,7 @@ public abstract class SubmarinePart
 		gl.glPushMatrix();
 
 		transformPart(gl);
+		rotateSecondary(gl);
 		drawPart(gl);
 
 		for (SubmarinePart child : children)
@@ -66,6 +67,8 @@ public abstract class SubmarinePart
 	}
 
 	public abstract void transformPart(GL2 gl);
+
+	public abstract void rotateSecondary(GL2 gl);
 
 	public abstract void drawPart(GL2 gl);
 
