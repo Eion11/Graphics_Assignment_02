@@ -22,9 +22,6 @@ public class SubmarineMovement implements KeyListener, Runnable
 	private double propellerRotation = 0;
 	public Point submarinePosition;
 
-	private Grid water;
-	private Grid floor;
-
 	private boolean up          = false;
 	private boolean down        = false;
 	private boolean forwards    = false;
@@ -37,8 +34,6 @@ public class SubmarineMovement implements KeyListener, Runnable
 		this.submarine = submarine;
 		this.submarinePosition = new Point();
 
-		this.water = water;
-		this.floor = floor;
 		this.maxHeight = water.gridYLevel;
 		this.minHeight = floor.gridYLevel + 1;
 

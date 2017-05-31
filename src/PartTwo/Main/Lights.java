@@ -7,7 +7,7 @@ import com.jogamp.opengl.GL2;
  */
 class Lights
 {
-	static void renderLighting(GL2 gl)
+	static void renderLighting(GL2 gl, double cameraPosition)
 	{
 		float ambient[] = { 0, 0, 0.2f, 1 };
 		float diffuse[] = { 0.1f, 0.1f, 0.2f, 1 };
@@ -24,14 +24,22 @@ class Lights
 		// draw using standard glColor
 		gl.glEnable(GL2.GL_COLOR_MATERIAL);
 
+		//fog
+		if (cameraPosition > 15)
+		{
+			float fogColor[] = { 0.5f, 0.6f, 1f, 1 };
+			gl.glFogfv(GL2.GL_FOG_COLOR, fogColor, 0);
+			gl.glFogf(GL2.GL_FOG_START, 30);
+			gl.glFogf(GL2.GL_FOG_END, 80);
+		}
+		else
+		{
+			float fogColor[] = { 0, 0.3f, 0.5f, 1 };
+			gl.glFogfv(GL2.GL_FOG_COLOR, fogColor, 0);
 
-		// fog
-		float fogColor[] = { 0, 0.3f, 0.5f, 1 };
-		gl.glFogfv(GL2.GL_FOG_COLOR, fogColor, 0);
-
-		gl.glFogf(GL2.GL_FOG_START, 30); // Fog Start Depth
-		gl.glFogf(GL2.GL_FOG_END, 80); // Fog End Depth
-
+			gl.glFogf(GL2.GL_FOG_START, 10);
+			gl.glFogf(GL2.GL_FOG_END, 50);
+		}
 		gl.glFogf(GL2.GL_FOG_MODE, GL2.GL_LINEAR);
 
 		gl.glEnable(GL2.GL_FOG);

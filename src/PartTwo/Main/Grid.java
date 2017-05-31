@@ -19,7 +19,7 @@ public class Grid
 	private Texture textureGround;
 
 	private double tileSize = 12;
-	private int    gridMax  = 10; // How many tiles you want to emerge in each direction from the origin
+	private int    gridMax  = 5; // How many tiles you want to emerge in each direction from the origin
 
 	private double transparency;
 

@@ -17,7 +17,7 @@ public class Camera implements MouseWheelListener
 	private double fov             = 45;
 	private double viewingDistance = 300;
 	private double lookAt[]        = { 0, 0, 0 };
-	private double eye[]           = { 0, 0, 0 };
+	public double eye[]           = { 0, 0, 0 };
 	private double up[]            = { 0, 1, 0 };
 
 	public void draw(GL2 gl, Submarine submarine)

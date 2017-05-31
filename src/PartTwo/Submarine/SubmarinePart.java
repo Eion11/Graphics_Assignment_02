@@ -28,13 +28,13 @@ public abstract class SubmarinePart
 
 	public void draw(GL2 gl)
 	{
-		gl.glColor3d(0.6, 0.7, 0.8);
+		gl.glColor3d(0.5, 0.5, 0.5);
 		gl.glPushMatrix();
 
-		gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_AMBIENT, new float[] { 1, 1, 1, 1 }, 0);
-		gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_DIFFUSE, new float[] { 1, 1, 1, 1 }, 0);
-		gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_SPECULAR, new float[] { 0, 0, 0, 1 }, 0);
-		gl.glMaterialf(GL2.GL_FRONT, GL2.GL_SHININESS, 300);
+		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT, new float[] { 0.2f, 0.2f, 0.2f, 1 }, 0);
+		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_DIFFUSE, new float[] { 0.3f, 0.35f, 0.4f, 1 }, 0);
+		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_SPECULAR, new float[] { 0, 0, 0, 1 }, 0);
+		gl.glMaterialf(GL2.GL_FRONT_AND_BACK, GL2.GL_SHININESS, 50);
 
 		transformPart(gl);
 		rotateSecondary(gl);
