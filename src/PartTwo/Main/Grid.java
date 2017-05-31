@@ -6,6 +6,7 @@ import com.jogamp.opengl.util.texture.TextureIO;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 /**
  * Created by Scott on 3/05/2017.
@@ -18,8 +19,8 @@ public class Grid
 	private int     displayList;
 	private Texture textureGround;
 
-	private double tileSize = 12;
-	private int    gridMax  = 5; // How many tiles you want to emerge in each direction from the origin
+	private double tileSize = 8;
+	private int    gridMax  = 40; // How many tiles you want to emerge in each direction from the origin
 
 	private double transparency;
 
@@ -29,7 +30,14 @@ public class Grid
 
 		gridYLevel = height;
 		transparency = tra;
+		if (transparency != 1)
+		{
+			tileSize = 30;
+			gridMax = 2;
+		}
 	}
+
+	private float moveWater = 0;
 
 	public void draw(GL2 gl)
 	{
@@ -38,7 +46,25 @@ public class Grid
 			initDisplayList(gl);
 		}
 
-		gl.glCallList(displayList);
+		if (transparency == 1)
+		{
+			gl.glCallList(displayList);
+		}
+		else // makes the water move
+		{
+			gl.glPushMatrix();
+
+			moveWater += 0.03f;
+			gl.glTranslated(moveWater, 0, 0);
+			gl.glCallList(displayList);
+
+			gl.glPopMatrix();
+
+			if (moveWater >= tileSize)
+			{
+				moveWater = 0;
+			}
+		}
 	}
 
 	private void initDisplayList(GL2 gl)

@@ -15,7 +15,7 @@ public class Camera implements MouseWheelListener
 	private double windowWidth     = 1;
 	private double windowHeight    = 1;
 	private double fov             = 45;
-	private double viewingDistance = 300;
+	private double viewingDistance = 350;
 	private double lookAt[]        = { 0, 0, 0 };
 	public double eye[]           = { 0, 0, 0 };
 	private double up[]            = { 0, 1, 0 };

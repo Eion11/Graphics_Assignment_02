@@ -64,11 +64,6 @@ public class Renderer implements GLEventListener
 		floor.draw(gl);
 		water.draw(gl);
 
-		GLUquadric quadric = glu.gluNewQuadric();
-		glu.gluQuadricDrawStyle(quadric, GLU.GLU_FILL);
-		gl.glScaled(200, 200, 200);
-		glu.gluSphere(quadric, 1, 20, 20);
-
 		gl.glFlush();
 	}
 
@@ -88,5 +83,6 @@ public class Renderer implements GLEventListener
 
 	@Override public void dispose(GLAutoDrawable arg0)
 	{
+
 	}
 }

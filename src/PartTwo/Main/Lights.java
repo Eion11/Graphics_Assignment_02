@@ -27,6 +27,7 @@ class Lights
 		//fog
 		if (cameraPosition > 15)
 		{
+			gl.glDisable(GL2.GL_LIGHT1);
 			float fogColor[] = { 0.5f, 0.6f, 1f, 1 };
 			gl.glFogfv(GL2.GL_FOG_COLOR, fogColor, 0);
 			gl.glFogf(GL2.GL_FOG_START, 30);
@@ -34,9 +35,9 @@ class Lights
 		}
 		else
 		{
+			gl.glEnable(GL2.GL_LIGHT1);
 			float fogColor[] = { 0, 0.3f, 0.5f, 1 };
 			gl.glFogfv(GL2.GL_FOG_COLOR, fogColor, 0);
-
 			gl.glFogf(GL2.GL_FOG_START, 10);
 			gl.glFogf(GL2.GL_FOG_END, 50);
 		}
