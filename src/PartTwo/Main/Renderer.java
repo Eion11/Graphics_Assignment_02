@@ -56,7 +56,7 @@ public class Renderer implements GLEventListener
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
 
 		camera.draw(gl, submarine);
-		GlobalLighting.renderLighting(gl);
+		Lights.renderLighting(gl);
 		Origin.drawCoordinateAxes(gl);
 
 		// Draw Submarine

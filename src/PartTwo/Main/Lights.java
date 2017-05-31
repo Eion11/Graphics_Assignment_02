@@ -5,12 +5,12 @@ import com.jogamp.opengl.GL2;
 /**
  * Created by Scott on 29/04/2017.
  */
-class GlobalLighting
+class Lights
 {
 	static void renderLighting(GL2 gl)
 	{
 		float ambient[] = { 0, 0, 0.2f, 1 };
-		float diffuse[] = { 0.1f, 0.1f, 0.1f, 0.1f };
+		float diffuse[] = { 0.1f, 0.1f, 0.2f, 1 };
 		float specular[] = { 1, 1, 1, 1 };
 		float position0[] = { 1, 1, 1, 0 };
 		gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, position0, 0);
@@ -47,17 +47,5 @@ class GlobalLighting
 		gl.glLightfv(GL2.GL_LIGHT2, GL2.GL_DIFFUSE, lightDiffuse, 0);
 
 		gl.glEnable(GL2.GL_LIGHT2);
-
-		// random light
-		lightPosition  = new float[] { 0, -3, 0, 1 };
-		lightDirection = new float[] { 0, -1, 0 };
-		lightDiffuse   = new float[] { 1, 1, 1, 1 };
-
-		gl.glLightf(GL2.GL_LIGHT3, GL2.GL_SPOT_CUTOFF, 30);
-		gl.glLightfv(GL2.GL_LIGHT3, GL2.GL_POSITION, lightPosition, 0);
-		gl.glLightfv(GL2.GL_LIGHT3, GL2.GL_SPOT_DIRECTION, lightDirection, 0);
-		gl.glLightfv(GL2.GL_LIGHT3, GL2.GL_DIFFUSE, lightDiffuse, 0);
-
-		gl.glEnable(GL2.GL_LIGHT3);
 	}
 }
