@@ -12,34 +12,23 @@ import java.io.IOException;
  */
 public class Grid
 {
-	private int displayList;
-
-	private final String ground_texture = "textures/grass_texture.jpg";
+	private final String TEXTURE_GROUND_FILE_LOCATION = "resources/texture_ground.jpg";
+	private final String TEXTURE_WATER_FILE_LOCATION  = "resources/texture_water.jpg";
+	public  int     gridYLevel; // what y level the grid will be drawn
+	private int     displayList;
 	private Texture textureGround;
 
-	public int gridYLevel; // what y level the grid will be drawn
+	private double tileSize = 12;
+	private int    gridMax  = 10; // How many tiles you want to emerge in each direction from the origin
 
-	private double tileSize = 0.5;
-	private int    gridMax; // How many tiles you want to emerge in each direction from the origin
-	private double red;
-	private double green;
-	private double blue;
 	private double transparency;
 
-	private int drawingStyle; // filled or grid
-
-	public Grid(int gridSize, int height, double r, double g, double b, double tra)
+	public Grid(int height, double tra)
 	{
 		displayList = -1;
 
-		gridMax = gridSize;
 		gridYLevel = height;
-		red = r;
-		green = g;
-		blue = b;
 		transparency = tra;
-
-		drawingStyle = GL2.GL_QUADS;
 	}
 
 	public void draw(GL2 gl)
@@ -66,25 +55,33 @@ public class Grid
 	{
 		try
 		{
-			textureGround = TextureIO.newTexture(new File(ground_texture), true);
+			if (transparency != 1)
+			{
+				textureGround = TextureIO.newTexture(new File(TEXTURE_WATER_FILE_LOCATION), true);
+			}
+			else
+			{
+				textureGround = TextureIO.newTexture(new File(TEXTURE_GROUND_FILE_LOCATION), true);
+			}
 		}
 		catch (IOException e)
 		{
+			System.err.println("...Error Reading Texture File...");
 			e.printStackTrace();
 		}
 
-		for (double i = -gridMax * tileSize; i < gridMax * tileSize; i += tileSize)
+		for (double row = -gridMax * tileSize; row < gridMax * tileSize; row += tileSize)
 		{
-			for (double j = -gridMax * tileSize; j < gridMax * tileSize; j += tileSize)
+			for (double column = -gridMax * tileSize; column < gridMax * tileSize; column += tileSize)
 			{
-				drawTile(gl, i, j);
+				drawTile(gl, row, column);
 			}
 		}
 	}
 
-	private void drawTile(GL2 gl, double startX, double startY)
+	private void drawTile(GL2 gl, double x, double z)
 	{
-		if (transparency > 0) // enable or disable features if the grid is transparent
+		if (transparency != 1) // enable or disable features if the grid is transparent
 		{
 			gl.glDisable(GL2.GL_DEPTH_BUFFER_BIT);
 			gl.glEnable(GL2.GL_BLEND);
@@ -94,31 +91,31 @@ public class Grid
 		textureGround.setTexParameterf(gl, GL2.GL_TEXTURE_WRAP_S, GL2.GL_REPEAT);
 		textureGround.setTexParameterf(gl, GL2.GL_TEXTURE_WRAP_T, GL2.GL_REPEAT);
 
-		double k0 = startX;
-		double k1 = startX + 1;
-		double l0 = startY;
-		double l1 = startY + 1;
+		double xTextureStart = x;
+		double xTextureEnd = x + 1;
+		double yTextureStart = z;
+		double yTextureEnd = z + 1;
 
 		gl.glEnable(GL2.GL_TEXTURE_2D);
-		gl.glBegin(drawingStyle);
+		gl.glBegin(GL2.GL_QUADS);
 
-		gl.glColor4d(red, green, blue, transparency);
-
-		gl.glNormal3d(0, 1, 0);
-		gl.glTexCoord2d(k1, l0);
-		gl.glVertex3d(startX, gridYLevel, startY);
+		gl.glColor4d(1, 1, 1, transparency);
 
 		gl.glNormal3d(0, 1, 0);
-		gl.glTexCoord2d(k1, l1);
-		gl.glVertex3d(startX + tileSize, gridYLevel, startY);
+		gl.glTexCoord2d(xTextureEnd, yTextureStart);
+		gl.glVertex3d(x, gridYLevel, z);
 
 		gl.glNormal3d(0, 1, 0);
-		gl.glTexCoord2d(k0, l1);
-		gl.glVertex3d(startX + tileSize, gridYLevel, startY + tileSize);
+		gl.glTexCoord2d(xTextureEnd, yTextureEnd);
+		gl.glVertex3d(x + tileSize, gridYLevel, z);
 
 		gl.glNormal3d(0, 1, 0);
-		gl.glTexCoord2d(k0, l0);
-		gl.glVertex3d(startX, gridYLevel, startY + tileSize);
+		gl.glTexCoord2d(xTextureStart, yTextureEnd);
+		gl.glVertex3d(x + tileSize, gridYLevel, z + tileSize);
+
+		gl.glNormal3d(0, 1, 0);
+		gl.glTexCoord2d(xTextureStart, yTextureStart);
+		gl.glVertex3d(x, gridYLevel, z + tileSize);
 
 		gl.glEnd();
 		gl.glDisable(GL2.GL_TEXTURE_2D);
@@ -127,18 +124,6 @@ public class Grid
 		{
 			gl.glDisable(GL2.GL_BLEND);
 			gl.glEnable(GL2.GL_DEPTH_BUFFER_BIT);
-		}
-	}
-
-	public void toggleDrawingStyle()
-	{
-		if (drawingStyle == GL2.GL_QUADS)
-		{
-			drawingStyle = GL2.GL_LINE_STRIP;
-		}
-		else
-		{
-			drawingStyle = GL2.GL_QUADS;
 		}
 	}
 }

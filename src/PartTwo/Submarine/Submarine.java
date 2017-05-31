@@ -9,21 +9,18 @@ import com.jogamp.opengl.glu.GLU;
  */
 public class Submarine
 {
-	public  SubmarineMovement submarineMovement;
-	private GLU               glu;
-
+	public SubmarineMovement  submarineMovement;
 	public SubmarineBody      body;
 	public SubmarinePropeller propeller1;
 	public SubmarinePropeller propeller2;
 	public SubmarinePropeller propeller3;
 	public SubmarinePropeller propeller4;
-	public SubmarineScope scope;
+	public SubmarineScope     scope;
 	public SubmarineSpotlight spotLight;
 
 	public Submarine(Grid water, Grid floor)
 	{
 		submarineMovement = new SubmarineMovement(this, water, floor);
-		glu = new GLU();
 		createSubmarine();
 	}
 
@@ -31,16 +28,16 @@ public class Submarine
 	{
 		// Creates each piece of the submarine and puts them in the right position
 		propeller1 = new SubmarinePropeller(RotationAxis.Z, 0);
-		propeller1.setTranslation(0, 0, 1.5);
+		propeller1.setTranslation(0, 0, 1.7);
 
 		propeller2 = new SubmarinePropeller(RotationAxis.Z, 90);
-		propeller2.setTranslation(0, 0, 1.5);
+		propeller2.setTranslation(0, 0, 1.7);
 
 		propeller3 = new SubmarinePropeller(RotationAxis.Z, 180);
-		propeller3.setTranslation(0, 0, 1.5);
+		propeller3.setTranslation(0, 0, 1.7);
 
 		propeller4 = new SubmarinePropeller(RotationAxis.Z, 270);
-		propeller4.setTranslation(0, 0, 1.5);
+		propeller4.setTranslation(0, 0, 1.7);
 
 		scope = new SubmarineScope(RotationAxis.Z);
 		scope.setTranslation(0, 1.5, 0);
@@ -58,16 +55,6 @@ public class Submarine
 
 	public void draw(GL2 gl)
 	{
-		// This will draw the entire submarine (parent node)
 		body.draw(gl);
-	}
-
-	public void toggleWired()
-	{
-		body.toggleDrawingStyle();
-		propeller1.toggleDrawingStyle();
-		propeller2.toggleDrawingStyle();
-		propeller3.toggleDrawingStyle();
-		propeller4.toggleDrawingStyle();
 	}
 }

@@ -28,7 +28,13 @@ public abstract class SubmarinePart
 
 	public void draw(GL2 gl)
 	{
+		gl.glColor3d(0.6, 0.7, 0.8);
 		gl.glPushMatrix();
+
+		gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_AMBIENT, new float[] { 1, 1, 1, 1 }, 0);
+		gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_DIFFUSE, new float[] { 1, 1, 1, 1 }, 0);
+		gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_SPECULAR, new float[] { 0, 0, 0, 1 }, 0);
+		gl.glMaterialf(GL2.GL_FRONT, GL2.GL_SHININESS, 300);
 
 		transformPart(gl);
 		rotateSecondary(gl);
@@ -40,18 +46,6 @@ public abstract class SubmarinePart
 		}
 
 		gl.glPopMatrix();
-	}
-
-	public void toggleDrawingStyle()
-	{
-		if (drawingStyle == GLU.GLU_LINE)
-		{
-			drawingStyle = GLU.GLU_FILL;
-		}
-		else
-		{
-			drawingStyle = GLU.GLU_LINE;
-		}
 	}
 
 	public void setTranslation(double x, double y, double z)

@@ -25,8 +25,9 @@ public class Main
 		GLCanvas canvas = new GLCanvas();
 
 		Camera camera = new Camera();
-		Grid water = new Grid(50, 8, 0.5, 0.8, 1, 0.5);
-		Grid floor = new Grid(50, -2, 0.8, 0.5, 0.25, 0);
+		Grid water = new Grid(15, 0.6);
+		Grid floor = new Grid(-5, 1);
+		Grid sky = new Grid(0, -1);
 		Submarine submarine = new Submarine(water, floor);
 
 		Renderer renderer = new Renderer(WIN_WIDTH, WIN_HEIGHT, camera, submarine, water, floor);
@@ -45,7 +46,6 @@ public class Main
 		System.out.println("|  A/D: Rotating Left and Right    |");
 		System.out.println("|  UP/DOWN: Up and Down            |");
 		System.out.println("|                                  |");
-		System.out.println("|  L  : Toggle Wire and Fill       |");
 		System.out.println("|  Scroll to zoom                  |");
 		System.out.println("\\----------------------------------/");
 	}

@@ -198,14 +198,12 @@ public class SubmarineMovement implements KeyListener, Runnable
 		submarinePosition.z -= (moveAmount * Math.cos(Math.toRadians(submarine.body.getRotation())));
 		submarine.body.setTranslation(submarinePosition.x, submarinePosition.y, submarinePosition.z);
 
-		spinPropellers(moveAmount * 10);
+		spinPropellers(moveAmount * 20);
 	}
 
 	public void rotateSubmarineLeftRight(double rotateAmount)
 	{
 		submarine.body.adjustRotation(rotateAmount);
-
-		spinPropellers(rotateAmount);
 
 		// Adjust Rotation
 		if (rotateAmount > 0)
@@ -248,7 +246,6 @@ public class SubmarineMovement implements KeyListener, Runnable
 				submarine.body.adjustRotationSecondary(-0.1, RotationAxis.Z);
 			}
 		}
-
 	}
 
 	private void spinPropellers(double rotateAmount)
@@ -289,11 +286,6 @@ public class SubmarineMovement implements KeyListener, Runnable
 				break;
 			case KeyEvent.VK_D: // Rotate Right
 				rotateRight = true;
-				break;
-			case KeyEvent.VK_L: // Toggle Wired
-				submarine.toggleWired();
-				water.toggleDrawingStyle();
-				floor.toggleDrawingStyle();
 				break;
 		}
 

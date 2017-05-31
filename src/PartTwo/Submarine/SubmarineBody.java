@@ -16,6 +16,8 @@ public class SubmarineBody extends SubmarinePart
 	protected double rotationSecondaryY;
 	protected double rotationSecondaryZ;
 
+	private int displayList = -1;
+
 	SubmarineBody(RotationAxis axis)
 	{
 		this.axis = axis;
@@ -24,15 +26,29 @@ public class SubmarineBody extends SubmarinePart
 
 	@Override public void drawPart(GL2 gl)
 	{
-		quadric = glu.gluNewQuadric();
+		if (displayList == -1)
+		{
+			initDisplayList(gl);
+		}
 
 		gl.glPushMatrix();
 
+		gl.glCallList(displayList);
+
+		gl.glPopMatrix();
+	}
+
+	private void initDisplayList(GL2 gl)
+	{
+		displayList = gl.glGenLists(1);
+		gl.glNewList(displayList, GL2.GL_COMPILE);
+
+		quadric = glu.gluNewQuadric();
 		glu.gluQuadricDrawStyle(quadric, drawingStyle);
 		gl.glScaled(1, 1, 1.5);
 		glu.gluSphere(quadric, 1, 100, 100);
 
-		gl.glPopMatrix();
+		gl.glEndList();
 	}
 
 	@Override public void transformPart(GL2 gl)

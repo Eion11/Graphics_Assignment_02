@@ -1,6 +1,5 @@
 package PartTwo.Submarine;
 
-import PartTwo.Main.Point;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.glu.GLUquadric;
@@ -15,6 +14,8 @@ public class SubmarinePropeller extends SubmarinePart
 
 	private int initialRotation;
 
+	private int displayList = -1;
+
 	SubmarinePropeller(RotationAxis axis, int initialRotation)
 	{
 		this.axis = axis;
@@ -25,18 +26,31 @@ public class SubmarinePropeller extends SubmarinePart
 
 	@Override public void drawPart(GL2 gl)
 	{
-		quadric = glu.gluNewQuadric();
+		if (displayList == -1)
+		{
+			initDisplayList(gl);
+		}
 
 		gl.glPushMatrix();
 
-		glu.gluQuadricDrawStyle(quadric, drawingStyle);
+		gl.glCallList(displayList);
 
+		gl.glPopMatrix();
+	}
+
+	private void initDisplayList(GL2 gl)
+	{
+		displayList = gl.glGenLists(1);
+		gl.glNewList(displayList, GL2.GL_COMPILE);
+
+		quadric = glu.gluNewQuadric();
+		glu.gluQuadricDrawStyle(quadric, drawingStyle);
 		gl.glRotated(90, 1, 0, 0);
 		gl.glRotated(initialRotation, 0, 1, 0);
 		gl.glScaled(0.5, 0.1, 1);
 		glu.gluCylinder(quadric, 0, 1, 1, 100, 100);
 
-		gl.glPopMatrix();
+		gl.glEndList();
 	}
 
 	@Override public void transformPart(GL2 gl)

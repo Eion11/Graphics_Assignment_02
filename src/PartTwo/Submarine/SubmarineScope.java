@@ -12,6 +12,8 @@ public class SubmarineScope extends SubmarinePart
 	private GLU        glu;
 	private GLUquadric quadric;
 
+	private int displayList = -1;
+
 	SubmarineScope(RotationAxis axis)
 	{
 		this.axis = axis;
@@ -21,17 +23,30 @@ public class SubmarineScope extends SubmarinePart
 
 	@Override public void drawPart(GL2 gl)
 	{
-		quadric = glu.gluNewQuadric();
+		if (displayList == -1)
+		{
+			initDisplayList(gl);
+		}
 
 		gl.glPushMatrix();
 
-		glu.gluQuadricDrawStyle(quadric, drawingStyle);
+		gl.glCallList(displayList);
 
+		gl.glPopMatrix();
+	}
+
+	private void initDisplayList(GL2 gl)
+	{
+		displayList = gl.glGenLists(1);
+		gl.glNewList(displayList, GL2.GL_COMPILE);
+
+		quadric = glu.gluNewQuadric();
+		glu.gluQuadricDrawStyle(quadric, drawingStyle);
 		gl.glRotated(90, 1, 0, 0);
 		gl.glScaled(0.2, 0.2, 0.5);
 		glu.gluCylinder(quadric, 1, 1, 1, 100, 100);
 
-		gl.glPopMatrix();
+		gl.glEndList();
 	}
 
 	@Override public void transformPart(GL2 gl)
