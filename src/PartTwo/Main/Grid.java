@@ -6,7 +6,6 @@ import com.jogamp.opengl.util.texture.TextureIO;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 
 /**
  * Created by Scott on 3/05/2017.
@@ -15,29 +14,30 @@ public class Grid
 {
 	private final String TEXTURE_GROUND_FILE_LOCATION = "resources/texture_ground.jpg";
 	private final String TEXTURE_WATER_FILE_LOCATION  = "resources/texture_water.jpg";
-	public  int     gridYLevel; // what y level the grid will be drawn
-	private int     displayList;
-	private Texture textureGround;
 
 	private double tileSize = 8;
 	private int    gridMax  = 40; // How many tiles you want to emerge in each direction from the origin
+	public int gridYLevel; // what y level the grid will be drawn
 
-	private double transparency;
+	private Texture textureGround;
+	private double  gridTransparency;
+	private int     displayList;
 
-	public Grid(int height, double tra)
+	private float moveWater = 0; // used to animate the water
+
+	public Grid(int height, double transparency)
 	{
-		displayList = -1;
+		displayList = -1; // if the display list is -1, it hasn't been initialised
 
 		gridYLevel = height;
-		transparency = tra;
-		if (transparency != 1)
+		gridTransparency = transparency;
+
+		if (gridTransparency != 1) // if it is water change the properties of the grid
 		{
 			tileSize = 30;
-			gridMax = 2;
+			gridMax = 30;
 		}
 	}
-
-	private float moveWater = 0;
 
 	public void draw(GL2 gl)
 	{
@@ -46,11 +46,11 @@ public class Grid
 			initDisplayList(gl);
 		}
 
-		if (transparency == 1)
+		if (gridTransparency == 1) // floor
 		{
 			gl.glCallList(displayList);
 		}
-		else // makes the water move
+		else // water: makes the water move
 		{
 			gl.glPushMatrix();
 
@@ -81,7 +81,7 @@ public class Grid
 	{
 		try
 		{
-			if (transparency != 1)
+			if (gridTransparency != 1)
 			{
 				textureGround = TextureIO.newTexture(new File(TEXTURE_WATER_FILE_LOCATION), true);
 			}
@@ -107,7 +107,7 @@ public class Grid
 
 	private void drawTile(GL2 gl, double x, double z)
 	{
-		if (transparency != 1) // enable or disable features if the grid is transparent
+		if (gridTransparency != 1) // enable or disable features if the grid is transparent
 		{
 			gl.glDisable(GL2.GL_DEPTH_BUFFER_BIT);
 			gl.glEnable(GL2.GL_BLEND);
@@ -125,7 +125,7 @@ public class Grid
 		gl.glEnable(GL2.GL_TEXTURE_2D);
 		gl.glBegin(GL2.GL_QUADS);
 
-		gl.glColor4d(1, 1, 1, transparency);
+		gl.glColor4d(1, 1, 1, gridTransparency);
 
 		gl.glNormal3d(0, 1, 0);
 		gl.glTexCoord2d(xTextureEnd, yTextureStart);
@@ -146,7 +146,7 @@ public class Grid
 		gl.glEnd();
 		gl.glDisable(GL2.GL_TEXTURE_2D);
 
-		if (transparency > 0) // enable or disable features if the grid is transparent
+		if (gridTransparency > 0) // enable or disable features if the grid is transparent
 		{
 			gl.glDisable(GL2.GL_BLEND);
 			gl.glEnable(GL2.GL_DEPTH_BUFFER_BIT);

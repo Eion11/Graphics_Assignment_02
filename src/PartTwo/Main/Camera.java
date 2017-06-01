@@ -17,7 +17,7 @@ public class Camera implements MouseWheelListener
 	private double fov             = 45;
 	private double viewingDistance = 350;
 	private double lookAt[]        = { 0, 0, 0 };
-	public double eye[]           = { 0, 0, 0 };
+	public  double eye[]           = { 0, 0, 0 };
 	private double up[]            = { 0, 1, 0 };
 
 	public void draw(GL2 gl, Submarine submarine)
@@ -75,7 +75,6 @@ public class Camera implements MouseWheelListener
 		int clicks = e.getWheelRotation();
 
 		// Zooms the camera in and out
-
 		while (clicks > 0)
 		{
 			cameraDistance *= 1.1;

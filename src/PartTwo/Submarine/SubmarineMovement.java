@@ -1,7 +1,7 @@
 package PartTwo.Submarine;
 
-import PartOne.Main.Point;
 import PartTwo.Main.Grid;
+import PartTwo.Main.Position;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -20,7 +20,7 @@ public class SubmarineMovement implements KeyListener, Runnable
 
 	private Submarine submarine;
 	private double propellerRotation = 0;
-	public Point submarinePosition;
+	public Position submarinePosition;
 
 	private boolean up          = false;
 	private boolean down        = false;
@@ -32,7 +32,7 @@ public class SubmarineMovement implements KeyListener, Runnable
 	public SubmarineMovement(Submarine submarine, Grid water, Grid floor)
 	{
 		this.submarine = submarine;
-		this.submarinePosition = new Point();
+		this.submarinePosition = new Position();
 
 		this.maxHeight = water.gridYLevel;
 		this.minHeight = floor.gridYLevel + 1;
@@ -60,7 +60,7 @@ public class SubmarineMovement implements KeyListener, Runnable
 		}
 		else if (backwards)
 		{
-			moveSubmarineForwardsBackwards(-submarineMovementSpeed);
+			moveSubmarineForwardsBackwards(-(submarineMovementSpeed / 2));
 		}
 
 		// Left and Right (turning)
@@ -323,7 +323,7 @@ public class SubmarineMovement implements KeyListener, Runnable
 		{
 			try
 			{
-				Thread.sleep(30);
+				Thread.sleep(15);
 				moveSubmarine();
 			}
 			catch (InterruptedException e)

@@ -1,5 +1,6 @@
 package PartTwo.Submarine;
 
+import PartTwo.Main.Position;
 import com.jogamp.opengl.GL2;
 
 /**
@@ -7,12 +8,20 @@ import com.jogamp.opengl.GL2;
  */
 public class SubmarineSpotlight extends SubmarinePart
 {
-	private float[] lightPosition  = { 0, -1, 1, 1 };
-	private float[] lightDirection = { 0, -1, 0 };
-	private float[] lightDiffuse   = { 1, 1, 1, 1 };
+	private float[] spotlightPosition  = { 0, -1.5f, 0, 1 };
+	private float[] spotlightDiffuse   = { 1, 1, 1, 1 };
+	private float[] spotlightDirection = { 0, -1, 0 };
+	private float[] spotlightSpecular  = { 1, 1, 1, 1 };
+	private int     spotlightAngle     = 60;
 
-	private int displayList = -1;
-	private int lightAngle  = 60;
+	private Position submarinePosition;
+	private float lightIntensity = 1;
+
+	public SubmarineSpotlight(Position submarinePosition)
+	{
+		this.submarinePosition = submarinePosition;
+
+	}
 
 	@Override public void transformPart(GL2 gl)
 	{
@@ -25,30 +34,28 @@ public class SubmarineSpotlight extends SubmarinePart
 
 	@Override public void drawPart(GL2 gl)
 	{
-		//setLightIntensity((float) ((-0.08 * movement.submarinePosition.y) + 0.8));
-
-		if (displayList == -1)
-		{
-			initDisplayList(gl);
-		}
 
 		gl.glPushMatrix();
 
-		gl.glCallList(displayList);
-
+		setLightIntensity((float) ((-0.15 * submarinePosition.y) + 1));
+		gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_DIFFUSE, spotlightDiffuse, 0);
+		gl.glLightf(GL2.GL_LIGHT1, GL2.GL_SPOT_CUTOFF, spotlightAngle);
+		gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, spotlightPosition, 0);
+		gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_SPOT_DIRECTION, spotlightDirection, 0);
+		gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_SPECULAR, spotlightSpecular, 0);
 		gl.glPopMatrix();
 	}
 
-	private void initDisplayList(GL2 gl)
+	private void setLightIntensity(float lightIntensity)
 	{
-		displayList = gl.glGenLists(1);
-		gl.glNewList(displayList, GL2.GL_COMPILE);
+		this.lightIntensity = lightIntensity;
 
-		gl.glLightf(GL2.GL_LIGHT1, GL2.GL_SPOT_CUTOFF, lightAngle);
-		gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, lightPosition, 0);
-		gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_SPOT_DIRECTION, lightDirection, 0);
-		gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_DIFFUSE, lightDiffuse, 0);
+		if (this.lightIntensity < 0)
+		{
+			this.lightIntensity = 0;
+		}
 
-		gl.glEndList();
+		spotlightDiffuse = new float[] { lightIntensity, lightIntensity, lightIntensity, 1 };
+
 	}
 }

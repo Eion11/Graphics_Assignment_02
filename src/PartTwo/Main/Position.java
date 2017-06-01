@@ -3,13 +3,13 @@ package PartTwo.Main;
 /**
  * Created by Scott on 30/04/2017.
  */
-public class Point
+public class Position
 {
 	public double x;
 	public double y;
 	public double z;
 
-	public Point()
+	public Position()
 	{
 		x = 0;
 		y = 0;

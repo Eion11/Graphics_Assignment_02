@@ -59,12 +59,8 @@ public class Main
 		{
 			@Override public void windowClosing(WindowEvent e)
 			{
-				// Run this on another thread than the AWT event queue to
-				// make sure the call to Animator.stop() completes before
-				// exiting
 				new Thread(new Runnable()
 				{
-
 					@Override public void run()
 					{
 						animator.stop();

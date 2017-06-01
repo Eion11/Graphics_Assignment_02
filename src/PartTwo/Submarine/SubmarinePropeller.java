@@ -44,11 +44,42 @@ public class SubmarinePropeller extends SubmarinePart
 		gl.glNewList(displayList, GL2.GL_COMPILE);
 
 		quadric = glu.gluNewQuadric();
-		glu.gluQuadricDrawStyle(quadric, drawingStyle);
+		glu.gluQuadricDrawStyle(quadric, GLU.GLU_FILL);
+
+		gl.glPushMatrix();
+
 		gl.glRotated(90, 1, 0, 0);
 		gl.glRotated(initialRotation, 0, 1, 0);
 		gl.glScaled(0.5, 0.1, 1);
 		glu.gluCylinder(quadric, 0, 1, 1, 100, 100);
+
+		gl.glPopMatrix();
+
+		gl.glPushMatrix();
+		double shift = 6.6;
+		if (initialRotation == 0)
+		{
+			gl.glScaled(0.5, 0.15, 0.1);
+			gl.glTranslated(0, -shift, 0);
+		}
+		else if (initialRotation == 90)
+		{
+			gl.glScaled(0.5, 0.15, 0.1);
+			gl.glTranslated(0, shift, 0);
+		}
+		else if (initialRotation == 180)
+		{
+			gl.glScaled(0.15, 0.5, 0.1);
+			gl.glTranslated(shift, 0, 0);
+		}
+		else if (initialRotation == 270)
+		{
+			gl.glScaled(0.15, 0.5, 0.1);
+			gl.glTranslated(-shift, 0, 0);
+		}
+		glu.gluSphere(quadric, 1, 20, 20);
+
+		gl.glPopMatrix();
 
 		gl.glEndList();
 	}

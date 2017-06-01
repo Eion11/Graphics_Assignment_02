@@ -40,11 +40,19 @@ public class SubmarineScope extends SubmarinePart
 		displayList = gl.glGenLists(1);
 		gl.glNewList(displayList, GL2.GL_COMPILE);
 
+		gl.glPushMatrix();
 		quadric = glu.gluNewQuadric();
-		glu.gluQuadricDrawStyle(quadric, drawingStyle);
+		glu.gluQuadricDrawStyle(quadric, GLU.GLU_FILL);
 		gl.glRotated(90, 1, 0, 0);
 		gl.glScaled(0.2, 0.2, 0.5);
 		glu.gluCylinder(quadric, 1, 1, 1, 100, 100);
+		gl.glPopMatrix();
+
+		gl.glPushMatrix();
+		gl.glScaled(0.2, 0.1, 0.2);
+		gl.glTranslated(0, 0.15, 0);
+		glu.gluSphere(quadric, 1, 20, 20);
+		gl.glPopMatrix();
 
 		gl.glEndList();
 	}

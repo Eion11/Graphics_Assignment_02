@@ -1,25 +1,18 @@
 package PartTwo.Submarine;
 
-import PartTwo.Main.Point;
+import PartTwo.Main.Position;
 import com.jogamp.opengl.GL2;
-import com.jogamp.opengl.glu.GLU;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public abstract class SubmarinePart
 {
-	protected int drawingStyle;
-	protected Point position = new Point();
+	protected Position position = new Position();
 	protected RotationAxis axis;
 	protected double       rotation;
 
 	private List<SubmarinePart> children = new LinkedList<>();
-
-	protected SubmarinePart()
-	{
-		drawingStyle = GLU.GLU_FILL;
-	}
 
 	public void addChild(SubmarinePart newChild)
 	{

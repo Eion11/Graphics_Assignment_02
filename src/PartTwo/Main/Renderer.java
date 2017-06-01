@@ -5,7 +5,6 @@ import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.glu.GLU;
-import com.jogamp.opengl.glu.GLUquadric;
 
 /**
  * Created by Scott Richards on 03-Apr-17.
@@ -41,10 +40,8 @@ public class Renderer implements GLEventListener
 		gl.glClearColor(0, 0, 0, 0);
 		gl.glShadeModel(GL2.GL_SMOOTH);
 		gl.glEnable(GL2.GL_DEPTH_TEST);
-		gl.glEnable(GL2.GL_NORMALIZE);
 		gl.glBlendFunc(GL2.GL_SRC_ALPHA, GL2.GL_ONE_MINUS_SRC_ALPHA);
-		gl.glEnable(GL2.GL_LIGHTING);
-		gl.glEnable(GL2.GL_LIGHT1);
+		gl.glEnable(GL2.GL_NORMALIZE);
 
 		glu = new GLU();
 	}
@@ -56,10 +53,9 @@ public class Renderer implements GLEventListener
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
 
 		camera.draw(gl, submarine);
-		Lights.renderLighting(gl, camera.eye[1]);
+		Lights.renderLighting(gl, camera.eye[1], water.gridYLevel);
 		Origin.drawCoordinateAxes(gl);
 
-		// Draw Submarine
 		submarine.draw(gl);
 		floor.draw(gl);
 		water.draw(gl);

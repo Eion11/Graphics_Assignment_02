@@ -2,7 +2,6 @@ package PartTwo.Submarine;
 
 import PartTwo.Main.Grid;
 import com.jogamp.opengl.GL2;
-import com.jogamp.opengl.glu.GLU;
 
 /**
  * Created by Scott on 29/04/2017.
@@ -42,8 +41,9 @@ public class Submarine
 		scope = new SubmarineScope(RotationAxis.Z);
 		scope.setTranslation(0, 1.5, 0);
 
-		spotLight = new SubmarineSpotlight();
+		spotLight = new SubmarineSpotlight(submarineMovement.submarinePosition);
 
+		// add children to the body, so that all the transformations happen to the whole sub when doing things to the body
 		body = new SubmarineBody(RotationAxis.Y);
 		body.addChild(propeller1);
 		body.addChild(propeller2);

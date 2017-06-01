@@ -44,7 +44,7 @@ public class SubmarineBody extends SubmarinePart
 		gl.glNewList(displayList, GL2.GL_COMPILE);
 
 		quadric = glu.gluNewQuadric();
-		glu.gluQuadricDrawStyle(quadric, drawingStyle);
+		glu.gluQuadricDrawStyle(quadric, GLU.GLU_FILL);
 		gl.glScaled(1, 1, 1.5);
 		glu.gluSphere(quadric, 1, 100, 100);
 
